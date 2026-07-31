@@ -67,7 +67,7 @@ class SimpleRNN:
             h_current = self.hidden_states[t + 1]
             h_prev_step = self.hidden_states[t]
 
-            dy = (predicted_y - correct_y) / self.output_size
+            dy = (predicted_y - correct_y)  #/ self.output_size
             dw_hy += np.dot(dy, h_current.T)
             db_y += dy
 
