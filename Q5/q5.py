@@ -17,10 +17,15 @@ def adaboost_fit(X, y, n_clf):
 		for f in range(n_features) :
 			iCol_values = X[: , f]
 			unique_values = np.unique(iCol_values)
-			threshold = np.zeros(len(unique_values) - 1)
-			for i in range(len(unique_values) - 1) : 
-				mean = (unique_values[i] + unique_values[i + 1])/2
-				threshold[i] = mean
+			threshold = unique_values
+			# print(unique_values)
+			# threshold = np.zeros(2 * len(unique_values) - 1)
+			# for u in range(len(unique_values) - 1) : 
+			# 	threshold[u] = unique_values[u]
+			# for i in range(len(unique_values) - 1) : 
+			# 	mean = (unique_values[i] + unique_values[i + 1])/2
+			# 	threshold[i] = mean
+			# print(threshold)
 			for t in threshold:
 				for polarity in [1,-1] : 
 					predicated_output = np.ones(n_samples)
@@ -55,10 +60,19 @@ def adaboost_fit(X, y, n_clf):
 			min_error = 1e-10
 		alpha = 0.5 * np.log((1-min_error) / min_error)
 		
-		clf = {'polarity': best_polarity, 'threshold': best_threshold, 'feature_index': proper_feature, 'alpha': alpha}
+		clf = {'polarity': best_polarity, 'threshold': float(best_threshold), 'feature_index': int(proper_feature), 'alpha': float(alpha)}
 		clfs.append(clf)
 		w = w * np.exp(-alpha * y * best_predications)
 		w = w / np.sum(w)
 		
 
 	return clfs
+
+
+
+# X = np.array([[1, 2], [2, 3], [3, 4], [4, 5]])
+# y = np.array([1, 1, -1, -1])
+# n_clf = 3
+
+# clfs = adaboost_fit(X, y, n_clf)
+# print(clfs)
