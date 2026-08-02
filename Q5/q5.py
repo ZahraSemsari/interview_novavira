@@ -15,8 +15,8 @@ def adaboost_fit(X, y, n_clf):
 		best_predications = []
 		
 		for f in range(n_features) :
-			iCol_values = X[: , f]
-			unique_values = np.unique(iCol_values)
+			Col_values = X[: , f]
+			unique_values = np.unique(Col_values)
 			threshold = unique_values
 			# print(unique_values)
 			# threshold = np.zeros(2 * len(unique_values) - 1)
@@ -30,11 +30,11 @@ def adaboost_fit(X, y, n_clf):
 				for polarity in [1,-1] : 
 					predicated_output = np.ones(n_samples)
 					if polarity == 1:
-						for index,i in enumerate(iCol_values) :
+						for index,i in enumerate(Col_values) :
 							if i < t:
 								predicated_output[index] = -1
 					else : 
-						for index,i in enumerate(iCol_values) :
+						for index,i in enumerate(Col_values) :
 							if i >= t:
 								predicated_output[index] = -1
 
@@ -70,9 +70,3 @@ def adaboost_fit(X, y, n_clf):
 
 
 
-# X = np.array([[1, 2], [2, 3], [3, 4], [4, 5]])
-# y = np.array([1, 1, -1, -1])
-# n_clf = 3
-
-# clfs = adaboost_fit(X, y, n_clf)
-# print(clfs)
